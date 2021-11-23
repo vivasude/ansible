@@ -1,0 +1,27 @@
+---
+- name: create the pythonhttpserver.
+  kubernetes.core.k8s:
+    state: present
+    definition: 
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: pythonhttpserver
+        namespace: default
+      spec:
+        selector:
+          matchLabels:
+            app: httpserver
+        template:
+          metadata:
+            labels:
+              app: httpserver
+          spec:
+            containers:
+            - name: httpserver
+              image: pythonhttpserver:latest
+              imagePullPolicy: Never
+              ports:
+              - containerPort:  5000
+          nodeSelector:
+                node:  master

@@ -1,0 +1,18 @@
+---
+- name: Ensure the mongodb-service Service exists in the default Namespace.
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: mongo-nodeport-svc
+        namespace: default
+      spec:
+        type: NodePort
+        ports:
+        - port: 27017
+          targetPort: 27017
+          nodePort: 32001
+        selector:
+          app: mongo

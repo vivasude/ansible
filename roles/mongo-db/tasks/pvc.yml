@@ -1,0 +1,17 @@
+---
+- name: To create Persistent Volume Claim for mongo-db
+  kubernetes.core.k8s:
+    state: present
+    definition:
+     apiVersion: v1
+     kind: PersistentVolumeClaim
+     metadata:
+       name: mongo-data
+       namespace: default
+     spec:
+       resources:
+         requests:
+           storage: 1Gi
+       accessModes:
+         - ReadWriteOnce
+     
